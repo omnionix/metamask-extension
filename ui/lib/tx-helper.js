@@ -8,6 +8,7 @@ export default function txHelper(
   decryptMsgs,
   encryptionPublicKeyMsgs,
   typedMessages,
+  pendingApprovals,
   network,
 ) {
   log.debug('tx-helper called with params:')
@@ -18,6 +19,7 @@ export default function txHelper(
     decryptMsgs,
     encryptionPublicKeyMsgs,
     typedMessages,
+    pendingApprovals,
     network,
   })
 
@@ -51,6 +53,12 @@ export default function txHelper(
   const typedValues = valuesFor(typedMessages)
   log.debug(`tx helper found ${typedValues.length} unsigned typed messages`)
   allValues = allValues.concat(typedValues)
+
+  const pendingApprovalValues = valuesFor(pendingApprovals)
+  log.debug(
+    `tx helper found ${pendingApprovalValues.length} pending approval requests`,
+  )
+  allValues = allValues.concat(pendingApprovalValues)
 
   allValues = allValues.sort((a, b) => {
     return a.time - b.time

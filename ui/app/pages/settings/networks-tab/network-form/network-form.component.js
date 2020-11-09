@@ -24,15 +24,15 @@ export default class NetworkForm extends PureComponent {
   }
 
   static propTypes = {
-    editRpc: PropTypes.func.isRequired,
-    showConfirmDeleteNetworkModal: PropTypes.func.isRequired,
+    editRpc: PropTypes.func,
+    showConfirmDeleteNetworkModal: PropTypes.func,
     rpcUrl: PropTypes.string,
     chainId: PropTypes.string,
     ticker: PropTypes.string,
     viewOnly: PropTypes.bool,
     networkName: PropTypes.string,
     onClear: PropTypes.func.isRequired,
-    setRpcTarget: PropTypes.func.isRequired,
+    setRpcTarget: PropTypes.func,
     networksTabIsInAddMode: PropTypes.bool,
     isCurrentRpcTarget: PropTypes.bool,
     blockExplorerUrl: PropTypes.string,

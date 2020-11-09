@@ -22,6 +22,7 @@ const unapprovedEncryptionPublicKeyMsgsSelector = (state) =>
   state.metamask.unapprovedEncryptionPublicKeyMsgs
 const unapprovedTypedMessagesSelector = (state) =>
   state.metamask.unapprovedTypedMessages
+const pendingApprovalsSelector = (state) => state.metamask.pendingApprovals
 const networkSelector = (state) => state.metamask.network
 
 export const unconfirmedTransactionsListSelector = createSelector(
@@ -31,6 +32,7 @@ export const unconfirmedTransactionsListSelector = createSelector(
   unapprovedDecryptMsgsSelector,
   unapprovedEncryptionPublicKeyMsgsSelector,
   unapprovedTypedMessagesSelector,
+  pendingApprovalsSelector,
   networkSelector,
   (
     unapprovedTxs = {},
@@ -39,6 +41,7 @@ export const unconfirmedTransactionsListSelector = createSelector(
     unapprovedDecryptMsgs = {},
     unapprovedEncryptionPublicKeyMsgs = {},
     unapprovedTypedMessages = {},
+    pendingApprovals = {},
     network,
   ) =>
     txHelper(
@@ -48,6 +51,7 @@ export const unconfirmedTransactionsListSelector = createSelector(
       unapprovedDecryptMsgs,
       unapprovedEncryptionPublicKeyMsgs,
       unapprovedTypedMessages,
+      pendingApprovals,
       network,
     ) || [],
 )
@@ -59,6 +63,7 @@ export const unconfirmedTransactionsHashSelector = createSelector(
   unapprovedDecryptMsgsSelector,
   unapprovedEncryptionPublicKeyMsgsSelector,
   unapprovedTypedMessagesSelector,
+  pendingApprovalsSelector,
   networkSelector,
   (
     unapprovedTxs = {},
@@ -67,6 +72,7 @@ export const unconfirmedTransactionsHashSelector = createSelector(
     unapprovedDecryptMsgs = {},
     unapprovedEncryptionPublicKeyMsgs = {},
     unapprovedTypedMessages = {},
+    pendingApprovals = {},
     network,
   ) => {
     const filteredUnapprovedTxs = Object.keys(unapprovedTxs).reduce(
@@ -90,6 +96,7 @@ export const unconfirmedTransactionsHashSelector = createSelector(
       ...unapprovedDecryptMsgs,
       ...unapprovedEncryptionPublicKeyMsgs,
       ...unapprovedTypedMessages,
+      ...pendingApprovals,
     }
   },
 )
@@ -103,6 +110,8 @@ const unapprovedEncryptionPublicKeyMsgCountSelector = (state) =>
   state.metamask.unapprovedEncryptionPublicKeyMsgCount
 const unapprovedTypedMessagesCountSelector = (state) =>
   state.metamask.unapprovedTypedMessagesCount
+const pendingApprovalCountSelector = (state) =>
+  state.metamask.pendingApprovalCount
 
 export const unconfirmedTransactionsCountSelector = createSelector(
   unapprovedTxsSelector,
@@ -111,6 +120,7 @@ export const unconfirmedTransactionsCountSelector = createSelector(
   unapprovedDecryptMsgCountSelector,
   unapprovedEncryptionPublicKeyMsgCountSelector,
   unapprovedTypedMessagesCountSelector,
+  pendingApprovalCountSelector,
   networkSelector,
   (
     unapprovedTxs = {},
@@ -119,6 +129,7 @@ export const unconfirmedTransactionsCountSelector = createSelector(
     unapprovedDecryptMsgCount = 0,
     unapprovedEncryptionPublicKeyMsgCount = 0,
     unapprovedTypedMessagesCount = 0,
+    pendingApprovalCount = 0,
     network,
   ) => {
     const filteredUnapprovedTxIds = Object.keys(unapprovedTxs).filter(
@@ -130,6 +141,7 @@ export const unconfirmedTransactionsCountSelector = createSelector(
 
     return (
       filteredUnapprovedTxIds.length +
+      pendingApprovalCount +
       unapprovedTypedMessagesCount +
       unapprovedMsgCount +
       unapprovedPersonalMsgCount +
